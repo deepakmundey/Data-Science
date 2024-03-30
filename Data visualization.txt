@@ -1,0 +1,48 @@
+import piplite
+await piplite.install(['numpy'])
+await piplite.install(['pandas'])
+await piplite.install(['seaborn'])
+# pandas is a software library written for the Python programming language for data manipulation and analysis.
+import pandas as pd
+#NumPy is a library for the Python programming language, adding support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays
+import numpy as np
+# Matplotlib is a plotting library for python and pyplot gives us a MatLab like plotting framework. We will use this in our plotter function to plot data.
+import matplotlib.pyplot as plt
+#Seaborn is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics
+import seaborn as sns
+## Exploratory Data Analysis
+# Verify library installations
+print("NumPy version:", np.__version__)
+print("Pandas version:", pd.__version__)
+print("Seaborn version:", sns.__version__)
+
+# Create synthetic data
+data = pd.DataFrame({
+    'x': np.random.randn(100),
+    'y': np.random.randn(100)
+})
+
+# Display the first few rows of the data
+print("First few rows of the synthetic data:")
+print(data.head())
+
+# Visualize the data using Seaborn
+sns.scatterplot(data=data, x='x', y='y')
+plt.title('Scatter Plot of Synthetic Data')
+plt.show()
+from js import fetch
+import io
+
+URL = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/dataset_part_2.csv"
+resp = await fetch(URL)
+dataset_part_2_csv = io.BytesIO((await resp.arrayBuffer()).to_py())
+df=pd.read_csv(dataset_part_2_csv)
+df.head(5)
+from js import fetch
+import io
+
+URL = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/dataset_part_2.csv"
+resp = await fetch(URL)
+dataset_part_2_csv = io.BytesIO((await resp.arrayBuffer()).to_py())
+df=pd.read_csv(dataset_part_2_csv)
+df.head(5)

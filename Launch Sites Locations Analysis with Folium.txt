@@ -1,0 +1,45 @@
+# import required Python packages for Launch Sites Locations Analysis with Folium:
+
+import piplite
+await piplite.install(['folium'])
+await piplite.install(['pandas'])
+import folium
+import pandas as pd
+# Import folium MarkerCluster plugin
+from folium.plugins import MarkerCluster
+# Import folium MousePosition plugin
+from folium.plugins import MousePosition
+# Import folium DivIcon plugin
+from folium.features import DivIcon
+## Task 1: Mark all launch sites on a map
+# Create a Folium map object centered around a location
+map = folium.Map(location=[28.5721, -80.648], zoom_start=7)  # Example: Kennedy Space Center
+
+# Add markers for each launch site with latitude and longitude coordinates
+launch_sites = {
+    'Kennedy Space Center': [28.5721, -80.648],
+    'Cape Canaveral Space Force Station': [28.5623, -80.5774],
+    'Vandenberg Space Force Base': [34.6328, -120.6107],
+    # Add more launch sites as needed
+}
+
+for site, coords in launch_sites.items():
+    folium.Marker(location=coords, popup=site).add_to(map)
+
+# Display the map
+map
+# Download and read the `spacex_launch_geo.csv`
+from js import fetch
+import io
+
+URL = 'https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/spacex_launch_geo.csv'
+resp = await fetch(URL)
+spacex_csv_file = io.BytesIO((await resp.arrayBuffer()).to_py())
+spacex_df=pd.read_csv(spacex_csv_file)
+# Select relevant sub-columns: `Launch Site`, `Lat(Latitude)`, `Long(Longitude)`, `class`
+spacex_df = spacex_df[['Launch Site', 'Lat', 'Long', 'class']]
+launch_sites_df = spacex_df.groupby(['Launch Site'], as_index=False).first()
+launch_sites_df = launch_sites_df[['Launch Site', 'Lat', 'Long']]
+launch_sites_df
+
+spacex_df.tail(10)
